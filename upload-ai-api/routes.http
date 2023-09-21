@@ -6,3 +6,32 @@ GET http://localhost:3333/prompts
 # @name upload-video
 POST http://localhost:3333/videos
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="example.mp3"
+Content-Type: audio/mpeg
+
+< ./example.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name create-transcription
+POST http://localhost:3333/videos/1aabf9ed-b263-4e1d-b547-1f2a40f07ed3/transcription
+Content-Type: application/json
+
+{
+    "prompt": "zeus, god"
+}
+
+###
+
+# @name generate-ai-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+    "videoId": "1aabf9ed-b263-4e1d-b547-1f2a40f07ed3",
+    "template": "Gere um resumo sucinto da transcrição do video informado a seguir: '''{transcription}'''",
+    "temperature": 0.5
+}
